@@ -1,0 +1,331 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Divisiones Organizacionales",
+        "description": "API REST para gestionar divisiones y subdivisiones de una organización",
+        "contact": {
+            "email": "support@example.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Servidor de desarrollo"
+        }
+    ],
+    "paths": {
+        "/api/divisions": {
+            "get": {
+                "tags": [
+                    "Divisions"
+                ],
+                "summary": "Listar todas las divisiones",
+                "description": "Obtiene una lista de todas las divisiones registradas",
+                "operationId": "50e6486e19fd3378a07526a29416537b",
+                "responses": {
+                    "200": {
+                        "description": "Lista de divisiones",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Division"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error del servidor"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Divisions"
+                ],
+                "summary": "Crear una nueva división",
+                "description": "Crea una nueva división en la organización",
+                "operationId": "10f2905b9762df55784172225492f9f5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DivisionRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "División creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Division"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validación fallida"
+                    },
+                    "500": {
+                        "description": "Error del servidor"
+                    }
+                }
+            }
+        },
+        "/api/divisions/{id}": {
+            "get": {
+                "tags": [
+                    "Divisions"
+                ],
+                "summary": "Obtener una división",
+                "description": "Obtiene los detalles de una división específica",
+                "operationId": "e20c07f74f99f6bb20ac901ecbfc2b27",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la división",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos de la división",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Division"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "División no encontrada"
+                    },
+                    "500": {
+                        "description": "Error del servidor"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Divisions"
+                ],
+                "summary": "Actualizar una división",
+                "description": "Actualiza los datos de una división existente",
+                "operationId": "1b05ba1b51bfb0699552c30b186c5ecb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la división",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DivisionRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "División actualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Division"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "División no encontrada"
+                    },
+                    "422": {
+                        "description": "Validación fallida"
+                    },
+                    "500": {
+                        "description": "Error del servidor"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Divisions"
+                ],
+                "summary": "Eliminar una división",
+                "description": "Elimina una división de la organización. Si tiene subdivisiones se eliminan en cascada",
+                "operationId": "d446cb987c6337b93d242acc288453e5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la división",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "División eliminada"
+                    },
+                    "404": {
+                        "description": "División no encontrada"
+                    },
+                    "500": {
+                        "description": "Error del servidor"
+                    }
+                }
+            }
+        },
+        "/api/divisions/{id}/subdivisions": {
+            "get": {
+                "tags": [
+                    "Divisions"
+                ],
+                "summary": "Listar subdivisiones",
+                "description": "Obtiene todas las subdivisiones de una división específica",
+                "operationId": "9935cdf958b30c22217a92d11ff7f21e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la división padre",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de subdivisiones",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Division"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "División no encontrada"
+                    },
+                    "500": {
+                        "description": "Error del servidor"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Division": {
+                "title": "Division",
+                "description": "Modelo de una División",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 45,
+                        "example": "Administración"
+                    },
+                    "parent_id": {
+                        "type": "integer",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "level": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "collaborators": {
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "ambassador": {
+                        "type": "string",
+                        "example": "María López Rodríguez",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "DivisionRequest": {
+                "title": "Division Request",
+                "description": "Datos para crear o actualizar una División",
+                "required": [
+                    "name",
+                    "level",
+                    "collaborators"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 45,
+                        "example": "Recursos Humanos"
+                    },
+                    "parent_id": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "level": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 2
+                    },
+                    "collaborators": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "example": 10
+                    },
+                    "ambassador": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Divisions",
+            "description": "API Endpoints para gestionar divisiones"
+        }
+    ]
+}
