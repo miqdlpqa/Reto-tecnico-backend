@@ -23,3 +23,9 @@ Route::get('/tables', function () {
 Route::get('/divisions-data', function () {
     return DB::table('divisions')->get();
 });
+
+Route::get('/count/divisions', function () {
+    return [
+        'count' => DB::table('divisions')->count()
+    ];
+});
