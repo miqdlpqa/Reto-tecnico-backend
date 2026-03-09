@@ -29,3 +29,12 @@ Route::get('/count/divisions', function () {
         'count' => DB::table('divisions')->count()
     ];
 });
+
+Route::get('/run-division-seeder', function () {
+    Artisan::call('db:seed', [
+        '--class' => 'Database\\Seeders\\DivisionSeeder',
+        '--force' => true,
+    ]);
+
+    return nl2br(Artisan::output());
+});
